@@ -14,7 +14,7 @@ class FeedbackForm(forms.ModelForm):
         if len(digits) != 11:
             raise forms.ValidationError("Номер должен содержать 11 цифр")
         
-        if Feedback.objects.filter(phone=phone).exists():
+        if Feedback.objects.filter(phone=phone).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError("Этот номер уже оставил заявку!")
             
         return phone
